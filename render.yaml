@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: smart-parking-backend
+    runtime: docker
+    plan: free
+    region: oregon
+    healthCheckPath: /
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD_HASH
+        sync: false # set manually in the Render dashboard, see README
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "60"
+      - key: CORS_ORIGINS
+        value: "http://localhost:3000"
+      - key: DATABASE_URL
+        value: "sqlite:////data/parking.db"
+    disk:
+      name: parking-data
+      mountPath: /data
+      sizeGB: 1
